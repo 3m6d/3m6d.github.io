@@ -1,0 +1,197 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Nav from '@/components/Nav.astro';
+import Hero from '@/components/Hero.astro';
+import Footer from '@/components/Footer.astro';
+import ExperienceItem from '@/components/ExperienceItem.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import SkillGroup from '@/components/SkillGroup.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import { site } from '@/data/site';
+import { skillGroups } from '@/data/skills';
+import { awards } from '@/data/awards';
+
+const experience = (await getCollection('experience')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const publications = (await getCollection('publications')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout>
+  <Nav />
+  <main id="main">
+    <Hero />
+
+    <section id="about">
+      <div class="wrap">
+        <p class="eyebrow">About</p>
+        <h2>Background</h2>
+        {site.about.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <p class="eyebrow">Experience</p>
+        <h2>Where I've worked</h2>
+        <div class="timeline">
+          {
+            experience.map((entry) => (
+              <ExperienceItem
+                role={entry.data.role}
+                org={entry.data.org}
+                location={entry.data.location}
+                startDate={entry.data.startDate}
+                endDate={entry.data.endDate}
+                bullets={entry.data.bullets}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="wrap">
+        <p class="eyebrow">Research &amp; Publications</p>
+        <h2>Published work</h2>
+        <div class="pub-list">
+          {
+            publications.map((pub) => (
+              <PublicationCard
+                title={pub.data.title}
+                venue={pub.data.venue}
+                location={pub.data.location}
+                date={pub.data.date}
+                doi={pub.data.doi}
+                doiUrl={pub.data.doiUrl}
+                summary={pub.data.summary}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <p class="eyebrow">Selected Projects</p>
+        <h2>What I've built</h2>
+        <p class="section-note">
+          Placeholder write-ups below — real project details, results, and
+          images to follow. New projects are added as markdown files with no
+          layout changes required.
+        </p>
+        <div class="project-grid">
+          {
+            projects.map((project) => (
+              <ProjectCard
+                slug={project.slug}
+                title={project.data.title}
+                summary={project.data.summary}
+                stack={project.data.stack}
+                period={project.data.period}
+                repoUrl={project.data.repoUrl}
+                demoUrl={project.data.demoUrl}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <p class="eyebrow">Skills</p>
+        <h2>Toolbox</h2>
+        <div class="skills-grid">
+          {
+            skillGroups.map((group) => (
+              <SkillGroup category={group.category} items={group.items} />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="awards">
+      <div class="wrap">
+        <p class="eyebrow">Awards &amp; Leadership</p>
+        <h2>Beyond the code</h2>
+        <ul class="awards-list">
+          {
+            awards.map((award) => (
+              <li>
+                <p class="award-title">{award.title}</p>
+                <p class="award-meta mono">
+                  {award.org} · {award.date}
+                </p>
+                <p class="award-desc">{award.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .section-note {
+    max-width: 34rem;
+    font-size: 0.92rem;
+  }
+
+  .timeline {
+    margin-top: 1rem;
+  }
+
+  .pub-list {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2rem;
+  }
+
+  .awards-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .award-title {
+    color: var(--text);
+    font-weight: 600;
+    margin: 0 0 0.15rem;
+  }
+
+  .award-meta {
+    color: var(--text-faint);
+    font-size: 0.78rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .award-desc {
+    margin: 0;
+    max-width: 38rem;
+  }
+</style>

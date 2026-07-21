@@ -1,0 +1,78 @@
+---
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#research', label: 'Research' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a href="#main" class="nav-brand mono">dm</a>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  /* No flexbox/grid here on purpose: this nav has to render correctly
+     inside every page's independently-bundled stylesheet, and plain block
+     flow + inline-block list items is the one layout approach that has
+     proven reliable across all of them. Brand stacks above the links at
+     every width rather than sitting inline beside them. */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    padding-block: 0.9rem;
+  }
+
+  .nav-brand {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 1.1rem 0.4rem 0;
+  }
+
+  li:last-child {
+    margin-right: 0;
+  }
+
+  li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  li a:hover,
+  li a:focus-visible {
+    color: var(--accent);
+  }
+</style>

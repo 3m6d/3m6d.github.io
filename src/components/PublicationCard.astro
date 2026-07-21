@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  venue: string;
+  location?: string;
+  date: string;
+  doi?: string;
+  doiUrl?: string;
+  summary: string;
+}
+
+const { title, venue, location, date, doi, doiUrl, summary } = Astro.props;
+---
+
+<article class="card publication">
+  <p class="eyebrow">{date}</p>
+  <h3>{title}</h3>
+  <p class="venue">
+    {venue}{location ? <span class="loc"> · {location}</span> : null}
+  </p>
+  <p class="summary">{summary}</p>
+  {
+    doiUrl ? (
+      <a class="button" href={doiUrl} target="_blank" rel="noopener noreferrer">
+        DOI: {doi} ↗
+      </a>
+    ) : null
+  }
+</article>
+
+<style>
+  .publication h3 {
+    font-size: 1.15rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .venue {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .loc {
+    color: var(--text-faint);
+  }
+
+  .summary {
+    margin: 0 0 1.25rem;
+  }
+</style>

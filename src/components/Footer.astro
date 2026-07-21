@@ -1,0 +1,56 @@
+---
+import { site } from '@/data/site';
+const year = new Date().getFullYear();
+---
+
+<footer id="contact">
+  <div class="wrap">
+    <p class="eyebrow">Contact</p>
+    <p class="lead">
+      Open to computer vision, edge AI, and applied ML roles — reach out
+      directly or find me on the platforms below.
+    </p>
+    <ul class="links" aria-label="Contact links">
+      <li class="link-item"><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      <li class="link-item">
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </li>
+      <li class="link-item">
+        <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      </li>
+    </ul>
+    <p class="fine mono">&copy; {year} {site.name}. Built with Astro.</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding-block: 3.5rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .lead {
+    max-width: 34rem;
+  }
+
+  /* inline-block rather than flex-wrap for robust wrapping at any width */
+  .links {
+    list-style: none;
+    margin: 1.25rem 0 2rem;
+    padding: 0;
+  }
+
+  .link-item {
+    display: inline-block;
+    margin: 0 1.25rem 0.5rem 0;
+  }
+
+  .links a {
+    font-size: 0.95rem;
+  }
+
+  .fine {
+    color: var(--text-faint);
+    font-size: 0.78rem;
+  }
+</style>

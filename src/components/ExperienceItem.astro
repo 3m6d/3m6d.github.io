@@ -1,0 +1,84 @@
+---
+interface Props {
+  role: string;
+  org: string;
+  location?: string;
+  startDate: string;
+  endDate: string;
+  bullets: string[];
+}
+
+const { role, org, location, startDate, endDate, bullets } = Astro.props;
+---
+
+<article class="item">
+  <div class="meta">
+    <p class="dates mono">{startDate} — {endDate}</p>
+  </div>
+  <div class="body">
+    <h3>{role}</h3>
+    <p class="org">
+      {org}{location ? <span class="loc"> · {location}</span> : null}
+    </p>
+    <ul class="bullets">
+      {bullets.map((bullet) => <li>{bullet}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .item {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .item:first-child {
+    padding-top: 0;
+  }
+
+  .dates {
+    color: var(--text-faint);
+    font-size: 0.82rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .org {
+    color: var(--accent);
+    font-size: 0.92rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .loc {
+    color: var(--text-faint);
+  }
+
+  .bullets {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .bullets li {
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 40rem) {
+    .item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>

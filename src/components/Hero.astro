@@ -1,0 +1,61 @@
+---
+import { site } from '@/data/site';
+---
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Machine Learning Engineer</p>
+    <h1>{site.name}</h1>
+    <p class="role mono">{site.title}</p>
+    <p class="tagline">{site.tagline}</p>
+    <ul class="links" aria-label="Contact links">
+      <li class="link-item">
+        <a class="button" href={`mailto:${site.email}`}>Email</a>
+      </li>
+      <li class="link-item">
+        <a class="button" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>
+      </li>
+      <li class="link-item">
+        <a class="button" href={site.github} target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .hero {
+    padding-block: 4.5rem 3.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+    margin: 0 0 0.5rem;
+  }
+
+  .role {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .tagline {
+    max-width: 38rem;
+    font-size: 1.05rem;
+  }
+
+  /* inline-block rather than flex-wrap for robust wrapping at any width */
+  .links {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+  }
+
+  .link-item {
+    display: inline-block;
+    margin: 0 0.75rem 0.75rem 0;
+  }
+</style>
